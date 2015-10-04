@@ -4,6 +4,7 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.function.BiFunction;
 
 /**
@@ -22,16 +23,25 @@ public class RPNCalculator {
 
     private Deque<Double> stack = new LinkedList<>();
 
-    public double eval(String in) {
+    public double eval(String in) throws UnknownElementException, NotEnoughOperandsException {
         stack.clear();
         String[] elements = in.split(" ");
         for (String e : elements) {
             if (OPERATORS.containsKey(e)) {
-                double o1 = stack.pop();
-                double o2 = stack.pop();
-                stack.push(OPERATORS.get(e).apply(o2, o1));
+                Double o1 = null, o2 = null;
+                try {
+                    o1 = stack.pop();
+                    o2 = stack.pop();
+                    stack.push(OPERATORS.get(e).apply(o2, o1));
+                } catch (NoSuchElementException ex) {
+                    throw new NotEnoughOperandsException(e, o1, o2, stack);
+                }
             } else {
-                stack.push(Double.parseDouble(e));
+                try {
+                    stack.push(Double.parseDouble(e));
+                } catch (NumberFormatException ex) {
+                    throw new UnknownElementException(e, stack);
+                }
             }
         }
         return stack.pop();

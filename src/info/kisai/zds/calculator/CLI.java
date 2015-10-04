@@ -17,7 +17,11 @@ public class CLI {
                 System.out.println("Au revoir !");
                 return;
             }
-            System.out.println(calculator.eval(in));
+            try {
+                System.out.println(calculator.eval(in));
+            } catch (UnknownElementException | NotEnoughOperandsException e) {
+                System.err.println(e.getMessage());
+            }
         }
     }
 
