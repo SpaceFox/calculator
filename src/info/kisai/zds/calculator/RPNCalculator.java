@@ -23,6 +23,7 @@ public class RPNCalculator {
     private Deque<Double> stack = new LinkedList<>();
 
     public double eval(String in) {
+        stack.clear();
         String[] elements = in.split(" ");
         for (String e : elements) {
             if (OPERATORS.containsKey(e)) {
