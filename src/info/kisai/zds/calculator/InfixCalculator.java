@@ -1,7 +1,5 @@
 package info.kisai.zds.calculator;
 
-import info.kisai.zds.calculator.Token.Type;
-
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,7 +33,7 @@ public class InfixCalculator {
         List<Token> out = new LinkedList<>();
         char[] chars = in.toCharArray();
 
-        Type previousTokenType = null, type;
+        TokenType previousTokenType = null, type;
         boolean isSpaceChar;
         for (char c : chars) {
 
@@ -44,18 +42,18 @@ public class InfixCalculator {
             if (Token.TYPE_DISCRIMINANTS.containsKey(c)) {
                 type = Token.TYPE_DISCRIMINANTS.get(c);
             } else if (!isSpaceChar) {
-                type = Type.FUNCTION;
+                type = TokenType.FUNCTION;
             }
-            if (previousTokenType == Type.NEGATIVE_OR_OPERATOR) {
+            if (previousTokenType == TokenType.NEGATIVE_OR_OPERATOR) {
                 final Token lastToken = out.get(out.size() - 1);
                 // Supposition : on a pas 2 nombres à la suite. Permet d'interpréter les formes comme "1-1".
-                if (type != Type.NUMBER || (lastToken != null && lastToken.getType() == Type.NUMBER)) {
-                    out.add(new Token(Type.OPERATOR, "-"));
+                if (type != TokenType.NUMBER || (lastToken != null && lastToken.getType() == TokenType.NUMBER)) {
+                    out.add(new Token(TokenType.OPERATOR, "-"));
                     buffer = new StringBuilder();
                 }
             }
             if (    previousTokenType != null
-                &&  previousTokenType != Type.NEGATIVE_OR_OPERATOR
+                &&  previousTokenType != TokenType.NEGATIVE_OR_OPERATOR
                 && (isSpaceChar || type != previousTokenType)
             ) {
                 out.add(new Token(previousTokenType, buffer.toString()));

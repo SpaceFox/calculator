@@ -8,49 +8,38 @@ import java.util.Map;
  */
 public class Token {
 
-    public enum Type {
-        NUMBER,
-        FUNCTION_ARG_SEPARATOR,
-        OPERATOR,
-        LEFT_PARENTHESIS,
-        RIGHT_PARENTHESIS,
-        FUNCTION,
-        NEGATIVE_OR_OPERATOR,
-        ;
-    }
-
-    public static final Map<Character, Type> TYPE_DISCRIMINANTS = new HashMap<>();
+    public static final Map<Character, TokenType> TYPE_DISCRIMINANTS = new HashMap<>();
     static {
-        TYPE_DISCRIMINANTS.put('0', Type.NUMBER);
-        TYPE_DISCRIMINANTS.put('1', Type.NUMBER);
-        TYPE_DISCRIMINANTS.put('2', Type.NUMBER);
-        TYPE_DISCRIMINANTS.put('3', Type.NUMBER);
-        TYPE_DISCRIMINANTS.put('4', Type.NUMBER);
-        TYPE_DISCRIMINANTS.put('5', Type.NUMBER);
-        TYPE_DISCRIMINANTS.put('6', Type.NUMBER);
-        TYPE_DISCRIMINANTS.put('7', Type.NUMBER);
-        TYPE_DISCRIMINANTS.put('8', Type.NUMBER);
-        TYPE_DISCRIMINANTS.put('9', Type.NUMBER);
-        TYPE_DISCRIMINANTS.put('.', Type.NUMBER);
-        TYPE_DISCRIMINANTS.put('-', Type.NEGATIVE_OR_OPERATOR);
-        TYPE_DISCRIMINANTS.put('+', Type.OPERATOR);
-        TYPE_DISCRIMINANTS.put('*', Type.OPERATOR);
-        TYPE_DISCRIMINANTS.put('/', Type.OPERATOR);
-        TYPE_DISCRIMINANTS.put('^', Type.OPERATOR);
-        TYPE_DISCRIMINANTS.put(',', Type.FUNCTION_ARG_SEPARATOR);
-        TYPE_DISCRIMINANTS.put('(', Type.LEFT_PARENTHESIS);
-        TYPE_DISCRIMINANTS.put(')', Type.RIGHT_PARENTHESIS);
+        TYPE_DISCRIMINANTS.put('0', TokenType.NUMBER);
+        TYPE_DISCRIMINANTS.put('1', TokenType.NUMBER);
+        TYPE_DISCRIMINANTS.put('2', TokenType.NUMBER);
+        TYPE_DISCRIMINANTS.put('3', TokenType.NUMBER);
+        TYPE_DISCRIMINANTS.put('4', TokenType.NUMBER);
+        TYPE_DISCRIMINANTS.put('5', TokenType.NUMBER);
+        TYPE_DISCRIMINANTS.put('6', TokenType.NUMBER);
+        TYPE_DISCRIMINANTS.put('7', TokenType.NUMBER);
+        TYPE_DISCRIMINANTS.put('8', TokenType.NUMBER);
+        TYPE_DISCRIMINANTS.put('9', TokenType.NUMBER);
+        TYPE_DISCRIMINANTS.put('.', TokenType.NUMBER);
+        TYPE_DISCRIMINANTS.put('-', TokenType.NEGATIVE_OR_OPERATOR);
+        TYPE_DISCRIMINANTS.put('+', TokenType.OPERATOR);
+        TYPE_DISCRIMINANTS.put('*', TokenType.OPERATOR);
+        TYPE_DISCRIMINANTS.put('/', TokenType.OPERATOR);
+        TYPE_DISCRIMINANTS.put('^', TokenType.OPERATOR);
+        TYPE_DISCRIMINANTS.put(',', TokenType.FUNCTION_ARG_SEPARATOR);
+        TYPE_DISCRIMINANTS.put('(', TokenType.LEFT_PARENTHESIS);
+        TYPE_DISCRIMINANTS.put(')', TokenType.RIGHT_PARENTHESIS);
     }
 
-    private Type type;
+    private TokenType type;
     private String value;
 
-    public Token(Type type, String value) {
+    public Token(TokenType type, String value) {
         this.type = type;
         this.value = value;
     }
 
-    public Type getType() {
+    public TokenType getType() {
         return type;
     }
 
