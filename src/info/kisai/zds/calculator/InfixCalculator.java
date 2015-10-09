@@ -21,8 +21,12 @@ public class InfixCalculator {
 
         System.out.println(tokens);
 
-        final Queue<String> queue = new LinkedList<>();
-        final Deque<String> stack = new LinkedList<>();
+        final Queue<Token> queue = new LinkedList<>();
+        final Deque<Token> stack = new LinkedList<>();
+
+        for (Token token : tokens) {
+            token.process(queue, stack);
+        }
 
         return null;
     }
@@ -39,8 +43,8 @@ public class InfixCalculator {
 
             type = null;
             isSpaceChar = Character.isSpaceChar(c);
-            if (Token.TYPE_DISCRIMINANTS.containsKey(c)) {
-                type = Token.TYPE_DISCRIMINANTS.get(c);
+            if (TokenType.TYPE_DISCRIMINANTS.containsKey(c)) {
+                type = TokenType.TYPE_DISCRIMINANTS.get(c);
             } else if (!isSpaceChar) {
                 type = TokenType.FUNCTION;
             }
