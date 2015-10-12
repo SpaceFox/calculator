@@ -17,11 +17,11 @@ public class CLI {
                 System.out.println("Au revoir !");
                 return;
             }
-//            try {
+            try {
                 System.out.println(calculator.eval(in));
-//            } catch (UnknownElementException | NotEnoughOperandsException e) {
-//                System.err.println(e.getMessage());
-//            }
+            } catch (ParenthesisMismatchException | UnknownElementException | NotEnoughOperandsException e) {
+                System.err.println(e.getMessage());
+            }
         }
     }
 

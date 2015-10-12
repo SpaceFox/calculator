@@ -5,20 +5,20 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.function.BiFunction;
 
 /**
  * Created by spacefox on 04/10/15.
  */
 public class RPNCalculator {
 
-    private static final Map<String, BiFunction<Double, Double, Double>> OPERATORS = new HashMap<>();
+    public static final Map<String, Operator> OPERATORS = new HashMap<>();
     static {
-        OPERATORS.put("+", (o1, o2) -> o1 + o2);
-        OPERATORS.put("-", (o1, o2) -> o1 - o2);
-        OPERATORS.put("*", (o1, o2) -> o1 * o2);
-        OPERATORS.put("/", (o1, o2) -> o1 / o2);
-        OPERATORS.put("^", (o1, o2) -> Math.pow(o1, o2));
+        OPERATORS.put("+", new Operator(2, true, (o1, o2) -> o1 + o2));
+        OPERATORS.put("-", new Operator(2, true, (o1, o2) -> o1 - o2));
+        OPERATORS.put("*", new Operator(3, true, (o1, o2) -> o1 * o2));
+        OPERATORS.put("/", new Operator(3, true, (o1, o2) -> o1 / o2));
+        OPERATORS.put("%", new Operator(3, true, (o1, o2) -> o1 % o2));
+        OPERATORS.put("^", new Operator(4, false, (o1, o2) -> Math.pow(o1, o2)));
     }
 
     private Deque<Double> stack = new LinkedList<>();
@@ -33,7 +33,7 @@ public class RPNCalculator {
                     try {
                         o1 = stack.pop();
                         o2 = stack.pop();
-                        stack.push(OPERATORS.get(e).apply(o2, o1));
+                        stack.push(OPERATORS.get(e).getOperation().apply(o2, o1));
                     } catch (NoSuchElementException ex) {
                         throw new NotEnoughOperandsException(e, o1, o2, stack);
                     }

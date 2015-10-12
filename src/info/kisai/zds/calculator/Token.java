@@ -10,15 +10,14 @@ public class Token {
 
     public enum Type {
         NUMBER,
+        FUNCTION,
         FUNCTION_ARG_SEPARATOR,
         OPERATOR,
-        LEFT_PARENTHESIS,
-        RIGHT_PARENTHESIS,
-        FUNCTION,
+        OPEN_PARENTHESIS,
+        CLOSE_PARENTHESIS,
         NEGATIVE_OR_OPERATOR,
         ;
     }
-
     public static final Map<Character, Type> TYPE_DISCRIMINANTS = new HashMap<>();
     static {
         TYPE_DISCRIMINANTS.put('0', Type.NUMBER);
@@ -33,13 +32,12 @@ public class Token {
         TYPE_DISCRIMINANTS.put('9', Type.NUMBER);
         TYPE_DISCRIMINANTS.put('.', Type.NUMBER);
         TYPE_DISCRIMINANTS.put('-', Type.NEGATIVE_OR_OPERATOR);
-        TYPE_DISCRIMINANTS.put('+', Type.OPERATOR);
-        TYPE_DISCRIMINANTS.put('*', Type.OPERATOR);
-        TYPE_DISCRIMINANTS.put('/', Type.OPERATOR);
-        TYPE_DISCRIMINANTS.put('^', Type.OPERATOR);
         TYPE_DISCRIMINANTS.put(',', Type.FUNCTION_ARG_SEPARATOR);
-        TYPE_DISCRIMINANTS.put('(', Type.LEFT_PARENTHESIS);
-        TYPE_DISCRIMINANTS.put(')', Type.RIGHT_PARENTHESIS);
+        TYPE_DISCRIMINANTS.put('(', Type.OPEN_PARENTHESIS);
+        TYPE_DISCRIMINANTS.put(')', Type.CLOSE_PARENTHESIS);
+        for (String key : RPNCalculator.OPERATORS.keySet()) {
+            TYPE_DISCRIMINANTS.put(key.charAt(0), Type.OPERATOR);
+        }
     }
 
     private Type type;
@@ -60,9 +58,10 @@ public class Token {
 
     @Override
     public String toString() {
-        return "Token{" +
-                "type=" + type +
-                ", value='" + value + '\'' +
-                '}';
+//        return"Token{" +
+//                "type=" + type +
+//                ", value='" + value + '\'' +
+//                '}';
+        return value;
     }
 }
